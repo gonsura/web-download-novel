@@ -9,3 +9,27 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Admin {
+  id       Int     @id @default(autoincrement())
+  name     String?
+  password String
+}
+
+model Novel {
+  id       Int       @id @default(autoincrement())
+  title    String
+  author   String
+  synopsis String
+  chapters Chapter[]
+}
+
+model Chapter {
+  id           Int    @id @default(autoincrement())
+  novel        Novel  @relation(fields: [novelId], references: [id])
+  chapterName String
+  downloadUrl String
+  novelId     Int
+  createdAt   DateTime
+  updatedAt   DateTime
+}
